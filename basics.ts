@@ -162,3 +162,40 @@ people.push(student);
 
 // getting the element will return it as a Person although we know its a student
 const assertedStudent = people.pop() as Student;
+
+// Literal Types
+// instead of generic types like number, bool you can define a specific value as a type
+
+const helloWorld: "HelloWorld" = "HelloWorld";
+
+type Mode = "Mode1" | "Mode2";
+
+function performSome(mode: Mode) {
+	if (mode == "Mode1") {
+		console.log("performing operation in mode 1");
+	} else {
+		console.log("performing operation in mode 2");
+	}
+}
+
+// performSome("Mode3"); doesnt work since its not a valid type
+performSome("Mode2");
+
+// Literal inference
+// a object literal is assumened to change values
+const obj = {
+	prop1: "hello",
+	prop2: 200,
+};
+
+function doSomethingByProp2(prop2: 200 | 400) {
+	return prop2 == 200 ? "Success" : "Fail";
+}
+
+// doSomethingByProp2(obj.prop2); doesnt work since prop2 is number an not a literal type
+// Solution -> Turn object types into literal types -> const
+const literalObj = {
+	prop1: "hello",
+	prop2: 200,
+} as const;
+doSomethingByProp2(literalObj.prop2);
